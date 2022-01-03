@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<head>
+    <title>A-Frame AR test</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script> 
+    <!-- <script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script> -->
+</head>
+
+<body style='margin : 0px; overflow: hidden;'>
+    <script>
+        
+    </script>
+    <a-scene>
+        <a-scene>
+            <a-assets>
+        
+                <a-asset-item
+                    src="Assets/UKS/Gltf/UKS.gltf" id="uks-gltf" alt="uks"
+                ></a-asset-item>
+
+                <img id="hospital-bed" src="Assets/plus.png" alt="hospital-bed" />
+                <img id="weight-machine" src="Assets/weight-machine.png" alt="weight-machine" />
+                <img id="medicine-box" src="Assets/medbox.png" alt="medicine-box" />
+                <img id="close-icon" src="Assets/close.png" alt="close-icon" />
+                
+                <audio id="music" src="Assets/music1.mp3"></audio>
+                <img src="Assets/play-icon.png" id="play" alt="play" />
+                <img src="Assets/pause-icon.jpg" id="pause"  alt="pause" />
+            </a-assets>
+          
+            <a-camera 
+                id="camera"
+                position="-1.823 1.6 4.207"
+               
+             >
+                <a-entity
+                    cursor="
+                        rayOrigin : mouse
+                    "
+                >
+                </a-entity>
+             </a-camera>
+        
+            
+            <!-- {/* UKS Model */} -->
+            <!-- <a-entity
+                rotation="0 90 0"
+                obj-model="obj: #uks; mtl: #uks-mtl"
+            ></a-entity> -->
+
+           <a-entity
+                rotation="0 90 0"
+                gltf-model="#uks-gltf"
+            ></a-entity> 
+
+            <a-box
+                position="3.192 2.908 4.312"
+                scale="0.5 0.5 0.5"
+                id="speaker"
+                sound="
+                    src: #music;
+                    volume: 10
+                "
+            >
+            </a-box>
+
+            <a-image
+                id="play-button" src="#play" position="0 1.717 4.304" scale="0.25 0.25 1" rotation="0 180 0"
+                play
+            ></a-image>
+         
+            <a-image
+                id="pause-button" src="#pause" position="0 1.4 4.304" scale="0.25 0.25 1"
+                stop
+            ></a-image>
+         
+            
+            <!-- {/* Plane */} -->
+            <a-plane
+                rotation="-90 0 0"
+                color="grey"
+                scale="40 40 1"
+                static-body
+            ></a-plane>
+
+            <a-entity 
+                light="
+                    type: directional; 
+                    color: #FFF; 
+                    intensity: 0.6" 
+                position="7.682 7.588 1">
+                    
+            </a-entity>
+
+            <a-entity light="type: ambient; color: #BBB"></a-entity>
+
+
+            <!-- {/* Sound */} -->
+
+
+            <!-- {/*
+
+            Bed 
+            
+            */} -->
+            <!-- {/* Bed Button */} -->
+            <a-box
+                id="bed-button"
+                position="-2.562 1.114 -0.125"
+                scale="0.250 0.250 0.250"
+                opacity="0"
+                event-set__show="
+                    _event: click;
+                    _target : #bed-details;
+                    visible: true;
+                "
+            >
+                <a-circle
+                    radius="0.5"
+                    src="#hospital-bed"
+                    look-at="#camera"
+                ></a-circle>
+            </a-box>
+                
+
+            <!-- {/* Bed Details */} -->
+            <a-plane
+                id="bed-details"
+                position="-2.279 1.384 -1.211"
+                rotation="0 0 0"
+                look-at="#camera"
+                visible="false"
+            >
+                <a-text
+                    value="Tempat Tidur"
+                    color="black"
+                    width="2.170"
+                    position="-0.477 0.393 0.01"
+                >
+                </a-text>
+                <a-box
+                    position="0.466 0.508 0.001"
+                    scale="0.2 0.2 0.2"
+                    opacity="0"
+                    event-set__hide="
+                        _event: click;
+                        _target: #bed-details;
+                        visible: false;
+                    "
+                >  
+                    <a-circle
+                        id="close-button"
+                        radius="0.5"
+                        src="#close-icon"
+                    
+                    ></a-circle>
+                </a-box>
+            </a-plane>
+
+            <!-- {/*
+
+            Measure Machine
+            
+            */}
+            {/* Measurement Button */} -->
+            <a-box
+                id="measure-button"
+                position="0.795 1.421 4.309"
+                scale="0.250 0.250 0.250"
+                opacity="0"
+                event-set__show="
+                    _event: click;
+                    _target : #measure-details;
+                    visible: true;
+                "
+            >
+                <a-circle
+                    radius="0.5"
+                    src="#weight-machine"
+                    look-at="#camera"
+                ></a-circle>
+            </a-box>
+                
+
+                <!-- {/* Measurement Details */} -->
+            <a-plane
+                id="measure-details"
+                position="1.277 1.384 3.597"
+                rotation="0 0 0"
+                look-at="#camera"
+                visible="false"
+            >
+                <a-text
+                    value="Pengukur Berat Badan"
+                    color="black"
+                    width="2.170"
+                    position="-0.477 0.393 0.01"
+                >
+                </a-text>
+                <a-box
+                    position="0.466 0.508 0.001"
+                    scale="0.2 0.2 0.2"
+                    opacity="0"
+                    event-set__hide="
+                        _event: click;
+                        _target: #measure-details;
+                        visible: false;
+                    "
+                >  
+                    <a-circle
+                        id="close-button"
+                        radius="0.5"
+                        src="#close-icon"
+                    
+                    ></a-circle>
+                </a-box>
+            </a-plane>
+            
+            <!-- {/*
+
+            Medicine Box 
+            
+            */}
+
+            {/* Medicine Box Button */} -->
+            <a-box
+                id="medicine-button"
+                position="2.914 1.666 2.231"
+                scale="0.250 0.250 0.250"
+                opacity="0"
+                event-set__show="
+                    _event: click;
+                    _target : #medicine-details;
+                    visible: true;
+                "
+            >
+                <a-circle
+                    radius="0.5"
+                    src="#medicine-box"
+                    look-at="#camera"
+                ></a-circle>
+            </a-box>
+                
+
+                <!-- {/* Measurement Details */} -->
+            <a-plane
+                id="medicine-details"
+                position="2.891 1.384 0.998"
+                rotation="0 0 0"
+                look-at="#camera"
+                visible="false"
+            >
+                <a-text
+                    value="Kotak Obat"
+                    color="black"
+                    width="2.170"
+                    position="-0.477 0.393 0.01"
+                >
+                </a-text>
+                <a-box
+                    position="0.466 0.508 0.001"
+                    scale="0.2 0.2 0.2"
+                    opacity="0"
+                    event-set__hide="
+                        _event: click;
+                        _target: #medicine-details;
+                        visible: false;
+                    "
+                >  
+                    <a-circle
+                        id="close-button"
+                        radius="0.5"
+                        src="#close-icon"
+                    
+                    ></a-circle>
+                </a-box>
+            </a-plane>
+
+         </a-scene>
+    </a-scene>
+</body>
